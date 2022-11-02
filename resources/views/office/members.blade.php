@@ -1,8 +1,8 @@
-<x-layouts.admin>
-    <div>
+<x-layouts.office>
+    <div class='relative' x-data="{ addMemberModal : false, replaceMemberModal: false }">
         <div class="mt-3">
             <div class="">
-                <h1 class="text-xl text-custom-blue font-medium">Members list</h1>
+                <h1 class="text-xl text-custom-blue font-medium">Members list office</h1>
                 <div class="flex items-center justify-between">
                     <section class="flex items-center space-x-2">
                         <div>
@@ -32,9 +32,8 @@
                                     d="M14 14.252v2.09A6 6 0 0 0 6 22l-2-.001a8 8 0 0 1 10-7.748zM12 13c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm6 6v-3.5l5 4.5-5 4.5V19h-3v-2h3z" />
                             </svg>
                         </x-minor.button>
-                        
-                        <x-minor.button href="{{ route('new_member') }}" buttonContent="Add member" class="text-white bg-custom-blue"
-                            @click="addMemberModal = true">
+
+                        <x-minor.button href="{{ route('new_member') }}" buttonContent="Add member" class="text-white bg-custom-blue" @click="addMemberModal = true">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="23" height="23">
                                 <path class="fill-current text-white" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z" />
                             </svg>
@@ -90,5 +89,26 @@
                 </div>
             </div>
         </div>
+        
+        <!--- Replacement modal -->
+        <div class='fixed inset-0 bg-black/50' x-show="replaceMemberModal" x-cloak>
+            <div class='flex justify-center mt-20'>
+                <div class='bg-white p-2 w-[40rem] rounded-md' 
+                    >
+                    <section class='flex items-center justify-between'>
+                        <h1 class="text-gray-700 font-semibold">Replace member</h1>
+                        <button @click="replaceMemberModal = false" class="text-gray-600 hover:text-black">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+                                <path class="fill-current" d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z" />
+                            </svg>
+                        </button>
+                    </section>
+
+                    <section class="mt-3">
+                        <h1>Content</h1>
+                    </section>
+                </div>
+            </div>
+        </div>
     </div>
-</x-layouts.admin>
+</x-layouts.office>

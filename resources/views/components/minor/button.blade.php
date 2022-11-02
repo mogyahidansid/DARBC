@@ -2,7 +2,7 @@
     'buttonContent',
 ])
 
-<button {{ $attributes->merge(['class' => 'flex items-center space-x-2 bg-custom-blue py-2.5 px-3 rounded']) }}>
+<a {{ $attributes->merge(['class' => 'flex items-center space-x-2 py-2.5 px-3 rounded cursor-pointer']) }}>
     {{ $slot }}
-    <span {{ $attributes->merge(['class' => 'font-medium']) }}>{{ $buttonContent }}</span>
-</button>
+    <span class = 'font-medium group'>{{ $buttonContent }}</span>
+</a>

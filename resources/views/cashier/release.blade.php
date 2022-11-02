@@ -1,5 +1,5 @@
 <x-layouts.cashier>
-    <div x-data="{ authorization: false }">
+    <div x-data="{ authorization : false, releaseNow : false }">
         <div class="mt-5">
             <div class="flex items-center space-x-2 mb-2 relative">
                 <div class="bg-white border flex items-center space-x-.5 px-2.5 py-1 rounded-md flex-1">
@@ -53,12 +53,11 @@
                         </section>
                         <section class="leading-4">
                             <h1 class="uppercase text-gray-400 text-xs">Status</h1>
-                            <p
-                                class="font-semibold text-custom-green relative ml-3 before:absolute before:top-1.5 before:-left-3 before:h-2 before:w-2 before:bg-custom-green before:rounded-full">
+                            <p class="font-semibold text-custom-green relative ml-3 before:absolute before:top-1.5 before:-left-3 before:h-2 before:w-2 before:bg-custom-green before:rounded-full">
                                 Ready to release</p>
                         </section>
                         <div class="inline text-white justify-self-end">
-                            <button class="flex items-center space-x-2 bg-custom-green hover:bg-green-hover py-2 px-3 rounded-md">
+                            <button class="flex items-center space-x-2 bg-custom-green hover:bg-green-hover py-2 px-3 rounded-md" @click='releaseNow = true'>
                                 <span>Release now</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18">
                                     <path fill="none" d="M0 0h24v24H0z" />
@@ -220,123 +219,140 @@
             </section>
         </div>
 
-    <!--- Receiving proof camera Modal -->
-    {{-- <div class="fixed inset-0 bg-black/40">
-        <div class="flex flex-col items-center justify-center">
-            <section class="bg-white rounded-md w-[40rem] p-5 my-[2rem] h-full space-y-3">
-                <div class="flex items-center justify-between">
-                    <h1 class="text-custom-blue font-semibold uppercase">Proof of Release snapshot</h1>
-                    <button>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                            <path class="fill-current text-gray-400"
-                                d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z" />
-                        </svg>
-                    </button>
-                </div>
-                
-                <!--- Camera -->
-                <div class="h-[25rem] w-[100%] bg-custom-blue/[10%] flex items-center justify-center rounded-md relative">
-                    <div id="attach_camera" class="w-[100%] h-full absolute inset-0"></div>
-                    <input type="hidden" name="image" class="image-tag">
-                    <div id="results">The captured snapshot will be shown here.</div>
-                </div>
+        <!--- Receiving proof camera Modal -->
+        <div class="fixed inset-0 bg-black/40" x-show='releaseNow'>
+            <div class="flex flex-col items-center justify-center">
+                <section class="bg-white rounded-md w-[40rem] p-5 my-[2rem] h-full space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h1 class="text-custom-blue font-semibold uppercase">Proof of Release snapshot</h1>
+                        <button @click='releaseNow = false'>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                <path class="fill-current text-gray-400"
+                                    d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z" />
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!--- Camera -->
+                    <div class="h-[25rem] w-[100%] bg-custom-blue/[10%] flex items-center justify-center rounded-md relative">
+                        <div id="attach_camera" class="w-[100%] h-full absolute inset-0"></div>
+                        <input type="hidden" name="image" class="image-tag">
+                        <div id="results">The captured snapshot will be shown here.</div>
+                    </div>
 
-                <!--- Buttons -->
-                <div class="flex items-center space-x-3 justify-center">
-                    <button id="btnTakeSnap" type="button" class="flex items-center font-medium space-x-2 bg-custom-blue py-2 px-3 rounded-md text-white mt-2" onClick="takeSnapshot()">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                            class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
-                        </svg>
-                        <span>Take Snapshot</span>
-                    </button>
+                    <!--- Buttons -->
+                    <div class="flex items-center space-x-3 justify-center" x-cloak>
+                        <button id="btnTakeSnap" type="button" class="flex items-center font-medium space-x-2 bg-custom-blue py-2 px-3 rounded-md text-white mt-2" onClick="takeSnapshot()">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
+                            </svg>
+                            <span>Take Snapshot</span>
+                        </button>
 
-                    <button id="btnSaveSnap" type="button"
-                        class="flex items-center space-x-2 bg-custom-green py-2 px-3 rounded-md text-white mt-2" onClick="">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                            <path class="fill-current text-white"
-                                d="M7 19v-6h10v6h2V7.828L16.172 5H5v14h2zM4 3h13l4 4v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm5 12v4h6v-4H9z" />
-                        </svg>
-                        <span>Save snapshot</span>
-                    </button>
+                        <button id="btnSaveSnap" type="button"
+                            class="flex items-center space-x-2 bg-custom-green py-2 px-3 rounded-md text-white mt-2" onClick="">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                <path class="fill-current text-white"
+                                    d="M7 19v-6h10v6h2V7.828L16.172 5H5v14h2zM4 3h13l4 4v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm5 12v4h6v-4H9z" />
+                            </svg>
+                            <span>Save snapshot</span>
+                        </button>
 
-                    <button id="retakeSnap" class="flex items-center space-x-2 bg-[#757575] py-2 px-3 rounded-md text-white mt-2" onClick="resetCamera()">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                            class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-                        </svg>
-                        <span>Retake snapshot</span>
-                    </button>
-                </div>
-            </section>
+                        <button id="retakeSnap" class="flex items-center space-x-2 bg-[#757575] py-2 px-3 rounded-md text-white mt-2" onClick="resetCamera()">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                            </svg>
+                            <span>Retake snapshot</span>
+                        </button>
+                    </div>
+                </section>
+            </div>
         </div>
-    </div>
-    @push('webcamjs-head')
-        <script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
-        </script>
-    @endpush
+        @push('webcamjs-head')
+            <script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
+            </script>
+        @endpush
 
-    @push('webcamjs-script')
-    <script>
-        const webcam = document.getElementById('attach_camera');
-        const snapshotResult = document.getElementById('results');
-        const imgTag = document.querySelector('.image-tag');
+        @push('webcamjs-script')
+            <script>
+                const webcam = document.getElementById('attach_camera');
+                const snapshotResult = document.getElementById('results');
+                const imgTag = document.querySelector('.image-tag');
 
-        const takeSnapBtn = document.getElementById('btnTakeSnap');
-        const saveSnapBtn = document.getElementById('btnSaveSnap');
-        const retakeSnapBtn = document.getElementById('retakeSnap');
+                const takeSnapBtn = document.getElementById('btnTakeSnap');
+                const saveSnapBtn = document.getElementById('btnSaveSnap');
+                const retakeSnapBtn = document.getElementById('retakeSnap');
 
-        takeSnapBtn.style.display = 'none';
-        saveSnapBtn.style.display = 'none';
-        retakeSnapBtn.style.display = 'none';
-        
-        Webcam.set(
-            {
-                image_format: 'jpeg',
-                jpeg_quality: 90
-            }
-        );
-        
-        Webcam.attach(webcam);
-        
-        // Check if webcam is loaded or not
-        navigator.getMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
-        
-        navigator.getMedia({video: true}, function() {
-                takeSnapBtn.style.display = 'flex';
-            }, function() {
-                alert('Something went wrong... \nWebcam is not loaded successfully!');
                 takeSnapBtn.style.display = 'none';
-            }
-        );
+                saveSnapBtn.style.display = 'none';
+                retakeSnapBtn.style.display = 'none';
+                
+                Webcam.set(
+                    {
+                        image_format: 'jpeg',
+                        jpeg_quality: 90
+                    }
+                );
+                
+                document.addEventListener('alpine:init', () => {
+                    Alpine.data('releaseNow', () => ({
+                        open: false,
+                    
+                        toggle() {
+                            this.open = ! this.open
+                        }
+                    }))
+                })
 
-        function takeSnapshot() {
-            Webcam.snap((data_uri) => {
-                const imgTag = document.querySelector('.image-tag').value = data_uri;
-                snapshotResult.innerHTML = '<img loading="lazy" src="'+ data_uri +'" />';
+                // preload shutter audio clip
+                // var shutter = new Audio();
+                // shutter.autoplay = true;
+                // shutter.src = navigator.userAgent.match(/Firefox/) ? 'shutter.ogg' : 'shutter.mp3';
 
-                webcam.style.display = 'none';
-                takeSnapBtn.style.display = 'none';
-                saveSnapBtn.style.display = 'flex';
-                retakeSnapBtn.style.display = 'flex';
+                Webcam.attach(webcam);
+                
+                // Check if webcam is loaded or not
+                navigator.getMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+                
+                navigator.getMedia({video: true}, function() {
+                        takeSnapBtn.style.display = 'flex';
+                    }, function() {
+                        alert('Something went wrong... \nWebcam is not loaded successfully!');
+                        takeSnapBtn.style.display = 'none';
+                    }
+                );
+
+                function takeSnapshot() {
+                    Webcam.snap((data_uri) => {
+                        const imgTag = document.querySelector('.image-tag').value = data_uri;
+                        snapshotResult.innerHTML = '<img loading="lazy" src="'+ data_uri +'" />';
+
+                        webcam.style.display = 'none';
+                        takeSnapBtn.style.display = 'none';
+                        saveSnapBtn.style.display = 'flex';
+                        retakeSnapBtn.style.display = 'flex';
+                        // Webcam.freeze();
+                        }
+                    );
                 }
-            );
-        }
 
-        function resetCamera() {
-            webcam.style.display = 'block';
-            snapshotResult.innerHTML = '';
-            takeSnapBtn.style.display = 'flex';
-            saveSnapBtn.style.display = 'none';
-            retakeSnapBtn.style.display = 'none';
-        }
-    </script>
-    @endpush --}}
+                function resetCamera() {
+                    // Webcam.unfreeze();
+                    webcam.style.display = 'block';
+                    snapshotResult.innerHTML = '';
+                    takeSnapBtn.style.display = 'flex';
+                    saveSnapBtn.style.display = 'none';
+                    retakeSnapBtn.style.display = 'none';
+                }
+            </script>
+        @endpush
     </div>
 </x-layouts.cashier>
