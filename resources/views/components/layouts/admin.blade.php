@@ -75,5 +75,7 @@
 
             {{ $slot }}
         </main>
+
+        @stack('uploadDocuments-script');
     </body>
 </html>

@@ -1,6 +1,5 @@
 
 <div>
-    <!--- Receiving proof camera Modal -->
     <div class="fixed inset-0 bg-black/40 z-[999999999]">
         <div class="flex flex-col items-center justify-center">
             <section class="bg-white rounded-md w-[40rem] p-5 my-[2rem] h-full space-y-3">

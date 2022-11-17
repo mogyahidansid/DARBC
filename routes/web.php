@@ -30,9 +30,17 @@ Route::prefix('admin')->group(function () {
     Route::get('/clusters', function () {
         return view('admin_corner/clusters');
     })->name('cluster');
+
     Route::get('/lot-distribution', function () {
         return view('admin_corner/lot-distribution');
     })->name('lot-distribution');
+    Route::get('/create-lot-owner', function () {
+        return view('admin_corner/create-lot-owner');
+    })->name('add-lot-owner');
+    Route::get('/lot-details', function () {
+        return view('admin_corner/lot-details');
+    })->name('lot-details');
+
     Route::get('/hospital-bills', function () {
         return view('admin_corner/hospital-bill');
     })->name('hospital-bill');
