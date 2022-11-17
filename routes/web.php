@@ -14,18 +14,32 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Admin Routes
-Route::get('/admin', function () {
-    return view('admin_corner/dashboard');
-})->name('dashboard');
-Route::get('/admin/members', function () {
-    return view('admin_corner/members');
-})->name('admin-members');
-Route::get('/admin/user-management', function () {
-    return view('admin_corner/user-management');
-})->name('staff-management');
-Route::get('/admin/release-management', function () {
-    return view('admin_corner/release-management');
-})->name('release-management');
+Route::prefix('admin')->group(function () {
+    Route::get('/', function () {
+        return view('admin_corner/dashboard');
+    })->name('dashboard');
+    Route::get('/members', function () {
+        return view('admin_corner/members');
+    })->name('admin-members');
+    Route::get('/user-management', function () {
+        return view('admin_corner/user-management');
+    })->name('staff-management');
+    Route::get('/release-management', function () {
+        return view('admin_corner/release-management');
+    })->name('release-management');
+    Route::get('/clusters', function () {
+        return view('admin_corner/clusters');
+    })->name('cluster');
+    Route::get('/lot-distribution', function () {
+        return view('admin_corner/lot-distribution');
+    })->name('lot-distribution');
+    Route::get('/hospital-bills', function () {
+        return view('admin_corner/hospital-bill');
+    })->name('hospital-bill');
+    Route::get('/reports', function () {
+        return view('admin_corner/reports');
+    })->name('report');
+});
 
 
 Route::get('/new_member', function () {
